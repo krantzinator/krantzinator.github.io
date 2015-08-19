@@ -8,7 +8,7 @@ email: krantzrs8@gmail.com
 author: Rachel Krantz
 description: > # Rachel Krantz is learning code, building community, and
         writing about it in Akron, OH.
-baseurl: ""
+baseurl: "/"
 
 # ----------------------- #
 #    Jekyll & Plugins     #
