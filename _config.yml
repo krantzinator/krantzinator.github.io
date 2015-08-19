@@ -1,0 +1,31 @@
+# ----------------------- #
+#      Main Configs       #
+# ----------------------- #
+
+url: "http://www.rachelkrantz.com"
+title: Rachel Krantz
+email: krantzrs8@gmail.com
+author: Rachel Krantz
+description: > # Rachel Krantz is learning code, building community, and
+        writing about it in Akron, OH.
+baseurl: ""
+
+# ----------------------- #
+#    Jekyll & Plugins     #
+# ----------------------- #
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+
+# ----------------------- #
+#   3rd Party Settings    #
+# ----------------------- #
+
+social:
+  - title: twitter
+    url: https://twitter.com/rustbeltrachel
+  - title: github
+    url: https://github.com/krantzinator
+  - title: linkedin
+    url: https://www.linkedin.com/in/rachelkrantz

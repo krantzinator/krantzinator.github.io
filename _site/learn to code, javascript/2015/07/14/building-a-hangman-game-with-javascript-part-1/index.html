@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="writing about it in Akron, OH.
+">
+    <meta name="author" content="Rachel Krantz">
+
+    <title>Building a Hangman Game with JavaScript - Part 1</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/css/style.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Nixie+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,500' rel='stylesheet' type='text/css'>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="theme-color" content="#000000">
+
+</head>
+
+
+	<body>
+		<!-- Navigation -->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="">Rachel Krantz</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+              
+              
+              
+  
+    
+      <li><a href="/blog/">Blog</a></li>
+    
+  
+
+  
+
+  
+    
+      <li><a href="/portfolio/">Portfolio</a></li>
+    
+  
+
+  
+    
+      <li><a href="/talks/">Talks</a></li>
+    
+  
+
+
+
+
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+		<div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Building a Hangman Game with JavaScript - Part 1</h1>
+    <p class="post-meta">Jul 14, 2015</p>
+  </header>
+
+  <article class="post-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+    <p>Have you heard of CodeNewbie? I’ll rave about them pretty regularly on here. One fateful night, after joining their Slack community, I impulsively jumped on the Hangout for that night’s JavaScript Tuesday.</p>
+
+<p>Lesson 1: follow your impulses!</p>
+
+<p>(Don’t quote me on that.)</p>
+
+<p>That night was the first in planning and building a project as a team. Let me tell you, team-based project work is a whole different world than working solo on projects. And it’s radically different than any online tutorial you’ve ever taken.</p>
+
+<p>I’ve learned more in the last few weeks of working on this project than in the last year of studying concepts, reading documentation, and doing tutorials. Get your hands dirty, people!</p>
+
+<p>We decided to build a Hangman game, and talked through all the different pieces we’d need to create. The JS-Tuesday host, Dan Berger, created issues of each item on the GitHub repo for tracking development progress. We’ve since moved everything to Trello, but you can still see the closed issues if you’re interested.</p>
+
+<p>That process itself was crazy interesting to me. I tend to jump into projects head first and try to barrel through. That is not good practice for programming! More on how that can mess up a development process in my next post, where I talk about how many days it took me to build a couple of working JavaScript functions. (And they’re not pretty functions either!)</p>
+
+<p>I’m still wrapping my head around how you can have several different people working on several different pieces, many of them with interdependencies, and have it all come out as one cohesive project.</p>
+
+<p>Things I’ve learned so far:</p>
+
+<ul>
+  <li>Limit your global functions; or establish what global functions and associated dependencies you will create as a team, before starting to build things
+    <ul>
+      <li>Side note: Dependencies generally means any other functions or elements someone has created that call, or use, your functions or elements</li>
+      <li>Additional side note: Calling a function means using a function; ex:</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">for (var i = 0; i <span class="nt">&lt; 10</span><span class="err">;</span> <span class="na">i</span><span class="err">++)</span> <span class="err">{</span>  <span class="na">myFunction</span><span class="err">();</span>  <span class="err">}</span></code></pre></div>
+
+<ul>
+  <li>I just called a function!</li>
+  <li>Using libraries like jQuery can increase the load time of your page, which is something to consider when building for performance. But of course, using libraries can also make your code more efficient, which decreases the load time of your page. Both. Do both.</li>
+  <li>jQuery doesn’t have to invoke the $(document).ready() every time! This is the format I learned at Code Academy, and while I’m also learning you should invoke this statement prior to some functions for different reasons (clear as mud, I know), it’s not imperative. Depends on the timing of when things load on the page and when you want your function to run.</li>
+  <li>jQuery can be interwoven into JavaScript! Say whaaaaat. It’s a library, so it’s a natural part of JavaScript, not a separate thing! I’m still not 100% clear on the differences and similarities of libraries as compared to frameworks, but FWIW. This function works:</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">easyPuzzle = document.getElementById(&quot;easy-puzzle&quot;).addEventListener(&quot;click&quot;, function() {
+   wordSelect(easyArray);
+   for (i = 0; i <span class="nt">&lt; lettersToGuess.length</span><span class="err">;</span> <span class="na">i</span><span class="err">++)</span> <span class="err">{</span>
+   <span class="err">$(&#39;.</span><span class="na">letter-space</span><span class="err">&#39;).</span><span class="na">empty</span><span class="err">();</span>
+   <span class="err">$(&#39;.</span><span class="na">letter-space</span><span class="err">&#39;).</span><span class="na">append</span><span class="err">(</span><span class="na">lettersToGuess</span><span class="err">[</span><span class="na">i</span><span class="err">]);</span>
+   <span class="err">};</span>
+  <span class="err">});</span></code></pre></div>
+
+<p>There is so much more to learn! I keep seeing these things called Grunt and Gulp (and Redis now) floating around, and I have a vague understanding of their existence, but that’s about it. And that’s OK for now.
+There are also tools that will do the “build” of an app for you. We used Yeoman, which builds out the backend of the aforementioned Grunt and Gulp and importing different libraries and all sorts of fancy things. I don’t fully understand its importance yet, but I know I’ll learn more once we finish the application and talk about the hosting side of things.</p>
+
+<p>I’m avoiding feeling overwhelmed by focusing on JavaScript, and throwing in little bits of things as they come up. I’m not going to worry about Gulp right now. I’ll get there, once I understand more of JavaScript’s depth and what it does. Then I’ll be able to more fully understand how Gulp interacts with it.</p>
+
+<p>That’s what I’ve got so far! Still learning, still building. My next post, I want to show you what I’ve built so far, and admit to how long it took me to create. I’ll also let you know if my first pull request of my life is accepted into the project!</p>
+
+        </div>
+      </div>
+    </div>
+  </article>
+
+</div>
+
+      </div>
+    </div>
+
+		<!-- Footer -->
+<footer>
+  
+  <div class="footer">
+  </div>
+
+</footer>
+
+		<!-- jQuery Version 1.11.0 -->
+  <script src="/js/jquery-1.11.0.js"></script>
+
+<!-- Plugin JavaScript -->
+  <script src="/js/jquery.easing.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+  <script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+  <script src="/js/landing-page.js"></script>
+
+	</body>
+</html>
