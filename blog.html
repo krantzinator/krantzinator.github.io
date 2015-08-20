@@ -11,7 +11,9 @@ group: "navigation"
     </div>
     <div class="col-md-8 col-md-offset-2">
         <ul class="post-list">
-          {% for post in site.posts %}
+        {% for post in site.posts %}
+          <!-- pull in only blog posts (separate category for 'talks') -->
+          {% if post.categories contains 'blog' %}
             <li>
               <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
 
@@ -19,8 +21,9 @@ group: "navigation"
                 <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
               </h2>
             </li>
-          {% endfor %}
-        </ul>
+          {% endif %}
+        {% endfor %}
+      </ul>
 
         <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
     </div>

@@ -1,6 +1,6 @@
 ---
 layout: post
-category: startups
+category: blog
 title: Don’t Wait to Take Action
 date: 2015-04-07
 ---

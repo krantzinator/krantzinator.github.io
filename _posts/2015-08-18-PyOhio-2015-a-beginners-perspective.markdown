@@ -2,7 +2,7 @@
 layout: post
 title: PyOhio 2015 - A beginner’s perspective
 date: 2015-08-18
-category: learn to code, python, pyohio 2015
+category: blog
 ---
 If you feel intimidated about attending a coding conference as a beginner, don’t! I say that because I was actually too intimidated to attend PyOhio, so I signed up as a volunteer.
 

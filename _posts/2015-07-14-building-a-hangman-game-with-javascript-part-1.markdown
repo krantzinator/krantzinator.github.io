@@ -1,6 +1,6 @@
 ---
 layout: post
-category: learn to code, javascript
+category: blog
 title: Building a Hangman Game with JavaScript - Part 1
 date: 2015-07-14
 ---
