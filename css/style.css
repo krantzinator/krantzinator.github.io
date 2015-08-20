@@ -40,6 +40,10 @@ h6 {
     background-color: #18bc9c;
 }
 
+.navbar-default {
+    border-style: hidden;
+}
+
 .navbar-default .navbar-brand {
     color: #fff;
 }
@@ -57,15 +61,24 @@ h6 {
     font-weight: 400;
 }
 
-/* background image for header
+
 .intro-header {
-    background: url(../img/header-image.jpg) center center no-repeat fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
+    background-position: bottom center;
+    background-position-x: 50%;
+    background-position-y: 100%;
+    transition: width .5s;
+    transition-timing-function: initial;
+    transition-delay: initial;
+    background: url(../img/header-image.jpg) top left no-repeat #666666;
+    display: block;
+    position: fixed;
+    z-index: 900;
+    width: 100%;
+    max-width: none;
+    height: 100%;
     background-size: cover;
 }
-*/
+
 
 #content-spacer-top {
     height:50px;
@@ -74,6 +87,7 @@ h6 {
 .intro-message {
     text-align: center;
     height: 100%;
+    color: #e1e8f0;
 }
 
 .intro-message .list-unstyled {
