@@ -1,10 +1,9 @@
 ---
 layout: post
-title: Experiment: A year getting rid of crap
+title: Experiment - A year getting rid of crap
 date: 2016-03-10
 category: blog
 ---
-
 I recently watched [The True Cost](http://truecostmovie.com/) and recommend you do the same. Along with promising myself to limit my clothes purchasing to second-hand or organic/fair-trade options, I decided I have too much crap.
 
 To be fair, I knew I had too much crap the last time I moved. My husband eloquently asked, "Why do we have all this crap, and move our crap from one place to another?"
