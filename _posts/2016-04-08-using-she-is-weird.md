@@ -8,9 +8,9 @@ For the game *Camel Up!*, the directions use the pronoun "she" to describe gamep
 
 This is an interesting phenomenon. The breakdown of women and men in the world is roughly equal, varying from country to country but typically within 1-2% of each other. Why is it weird, then, to use both pronouns?
 
-My father-in-law made the comment that the directions were obviously being political. Why do we assume that when we see it?
+My father-in-law made the comment that the directions were obviously being political.
 
-Why is it so weird to read something with "she" in it?
+Why do we assume that when we see it? Why is it so weird to read something with "she" in it?
 
 I'll confess -- I'm still caught off-guard when I read "she" instead of the societally accepted "he." I recently read Peter Thiel's "From Zero to One," and the only thing I remember from the book is his equitable use of describing CEOs and founders as "she" and "he." It almost made me uncomfortable, because my brain is so unaccustomed to it.
 
