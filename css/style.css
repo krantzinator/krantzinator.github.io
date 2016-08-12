@@ -29,7 +29,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Nixie One', cursive;
+    font-family: 'Muli', "Open Sans", sans-serif;
     font-weight: 700;
 }
 
@@ -195,7 +195,7 @@ p.copyright {
 
 .large-font {
   font-size: 2em;
-  font-family: Raleway, sans-serif;
+  font-family: 'Raleway', sans-serif;
 }
 
 .list-inline .item-details {
