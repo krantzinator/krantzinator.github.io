@@ -29,8 +29,8 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Muli', "Open Sans", sans-serif;
-    font-weight: 700;
+    font-family: 'Muli', 'Open Sans', sans-serif;
+    font-weight: 400;
 }
 
 .post-meta {
