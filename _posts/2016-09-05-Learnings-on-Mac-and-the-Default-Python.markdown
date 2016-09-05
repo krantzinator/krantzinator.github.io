@@ -18,7 +18,7 @@ My mentor had a hard stop at 5:50pm, so she left me with the following error to 
 
 **Learned that matplotlib requires Python framework access, which isn't available in a virtualenv**
 
-The above error message was fantastic, because it pointed me to exactly where I needed to start fixing this problem. I followed [the included instructions](http://matplotlib.org/faq/virtualenv_faq.html) for creating a PYTHONHOME script to include in your virtualenv's bin.
+The above error message was fantastic, because it pointed me to exactly where I needed to start fixing this problem. I followed [the included instructions](http://matplotlib.org/faq/virtualenv_faq.html) for creating a PYTHONHOME script to include in your virtualenv's `bin`.
 
 **Hit errors saying Python2.7 wasn't in my `/usr/local/bin` folder**
 
@@ -26,11 +26,11 @@ I didn't save these errors (maybe I should add that to lessons learned? Save all
 
 **Accessed both `/usr/local/bin` and `/Library/Frameworks/Python.framework` - no Python2.7**
 
-This is when I freaked out. I saw all the Python 3s I have downloaded over the past months in `/usr/local/bin`, and I saw 3.4 and 3.5 in Python.framework/Versions. But where the heck was my Python2.7??
+This is when I freaked out. I saw all the Python 3s I have downloaded over the past months in `/usr/local/bin`, and I saw 3.4 and 3.5 in `Python.framework/Versions`. But where the heck was my Python2.7??
 
 **Got confused and worried**
 
-I *know* Mac needs Python2.7 to run its apps, and that you should never, ever remove the default Mac Python unless you *really* know what you're doing. I'd never even considered doing this. My next thought was, Did installing additional versions of Python somehow remove 2.7?
+I *know* Mac needs Python2.7 to run its apps, and that you should never, ever remove the default Mac Python unless you *really* know what you're doing. I'd never even considered doing this. My next thought was, *Did installing additional versions of Python somehow remove 2.7?*
 
 This was followed up by wondering why A) all my Mac apps functioned normally, and B) why when I open a REPL it still, with no problems, defaults to Python 2.7.
 
@@ -42,7 +42,7 @@ Herein lies the problem with Googling: sometimes you Google the wrong things.
 
 My searches centered around asking why python2.7 was missing from `/usr/local/bin` and how to restore it to that location. I found a lot of answers about how removing it was the dumbest thing you could do (I *know*! I didn't, I swear!), and also suggestions on reinstalling your most recent OS X to restore system defaults, including system Python defaults.
 
-Embarrassingly, I was going to go through with a reinstall of my OS. Mac makes this easy to do, and you theoretically don't lose any of your files or data. Thankfully, I hit a snag that made me put off doing this. Details unimportant there, but I am SO GLAD that snag happened.
+Embarrassingly, I was going to go through with a [reinstall of my OS](https://support.apple.com/en-us/HT204904). Mac makes this easy to do, and you theoretically don't lose any of your files or data. Thankfully, I hit a snag that made me put off doing this. Details unimportant there, but I am SO GLAD that snag happened.
 
 *How close I came to taking an involved action that wouldn't have fixed my problem has made me much more cautious of the "Blindly copy-paste from StackOverflow!" mentality programmers joke about so much. Again, you don't know if you're asking the right question.*
 
@@ -61,6 +61,7 @@ Luckily for both of us, someone answered our unasked question as well, which sho
 Thank you, [abarnert](http://stackoverflow.com/users/908494/abarnert). I created a StackOverflow account so I could upvote your answer. (I know, I should have created one a while ago. This experience fixed so many problems!)
 
 The most pivotal piece of their answer was:
+
 >Let's start off with this:
 
 >`/Library/Frameworks/Python/2.7` is neither the Apple Python nor the Homebrew Python. You apparently installed a third Python, maybe the one from the official python.org binary installers. Removing that one won't affect the Homebrew one.
