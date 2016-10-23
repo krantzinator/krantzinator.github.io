@@ -1,5 +1,6 @@
 ---
 layout: post
+comments: true
 title: Using "she" is weird
 date: 2016-04-08
 category: blog

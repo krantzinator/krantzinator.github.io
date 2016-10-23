@@ -8,7 +8,7 @@ body,
 html {
     width: 100%;
     height: 100%;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Raleway:500', sans-serif;
 }
 /*
 body {
@@ -29,8 +29,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Nixie One', cursive;
-    font-weight: 700;
+    font-family: 'Muli', 'Open Sans', sans-serif;
 }
 
 .post-meta {
@@ -195,7 +194,7 @@ p.copyright {
 
 .large-font {
   font-size: 2em;
-  font-family: Raleway, sans-serif;
+  font-family: 'Raleway', sans-serif;
 }
 
 .list-inline .item-details {
@@ -322,3 +321,8 @@ p.copyright {
     height:100px;
 }
 */
+
+/* Disqus widget */
+#disqus {
+  padding-top: 3em;
+}

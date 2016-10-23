@@ -1,5 +1,6 @@
 ---
 layout: post
+comments: true
 title: Learnings on Mac and the Default Python
 date: 2016-09-05
 category: blog

@@ -1,5 +1,6 @@
 ---
 layout: post
+comments: true
 title: PyOhio 2016 - A not-quite-beginner's perspective
 date: 2016-08-12
 category: blog

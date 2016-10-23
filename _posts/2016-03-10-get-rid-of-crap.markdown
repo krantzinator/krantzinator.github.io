@@ -1,5 +1,6 @@
 ---
 layout: post
+comments: true
 title: Experiment - A year getting rid of crap
 date: 2016-03-10
 category: blog

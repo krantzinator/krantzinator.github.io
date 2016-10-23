@@ -321,3 +321,8 @@ p.copyright {
     height:100px;
 }
 */
+
+/* Disqus widget */
+#disqus {
+  padding-top: 3em;
+}

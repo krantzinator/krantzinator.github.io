@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="writing about it in Akron, OH.
+">
+    <meta name="author" content="Rachel Krantz">
+
+    <title>Learnings on Mac and the Default Python</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/css/style.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Nixie+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,500' rel='stylesheet' type='text/css'>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="theme-color" content="#000000">
+
+</head>
+
+
+	<body>
+		<!-- Navigation -->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://localhost:4000">Rachel Krantz</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+              
+              
+              
+  
+    
+      <li><a href="/blog/">Blog</a></li>
+    
+  
+
+  
+
+  
+    
+      <li><a href="/portfolio/">Portfolio</a></li>
+    
+  
+
+  
+    
+      <li><a href="/talks/">Talks</a></li>
+    
+  
+
+
+
+
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+		<!-- padding to make size of content responsive -->
+		<div id="content-spacer-top"></div>
+
+		<div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Learnings on Mac and the Default Python</h1>
+    <p class="post-meta">Sep 5, 2016</p>
+  </header>
+
+  <article class="post-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <p>Today I learned to not take the first answer you find on StackOverflow at face value. Combine it with a bit of critical thinking to make sure it’s what you need.</p>
+
+<p>The sequence of events went something like:</p>
+
+<p><strong>Started my mentorship through Recurse Center’s <a href="https://www.recurse.com/blog/99-free-one-on-one-mentorship-for-new-programmers">RCStart</a> program</strong></p>
+
+<p>We jumped right into web data scraping basics, spinning up a virtualenv and installing numpy, pandas, and matplotlib. (Aside: I knew both my mentor and I had recently returned from travels, and as an intro I asked where she had been spending her time. She responded, “Glacier National Park,” and I immediately knew this mentorship is going to go swimmingly. That’s where I had just returned from as well!)</p>
+
+<p>My mentor had a hard stop at 5:50pm, so she left me with the following error to figure out, which I hit when importing matplotlib into my virtualenv’s REPL:</p>
+
+<p><code class="highlighter-rouge">RuntimeError: Python is not installed as a framework. The Mac OS X backend will not be able to function correctly if Python is not installed as a framework. See the Python documentation for more information on installing Python as a framework on Mac OS X. Please either reinstall Python as a framework, or try one of the other backends. If you are Working with Matplotlib in a virtual enviroment see 'Working with Matplotlib in Virtual environments' in the Matplotlib FAQ</code></p>
+
+<p><strong>Learned that matplotlib requires Python framework access, which isn’t available in a virtualenv</strong></p>
+
+<p>The above error message was fantastic, because it pointed me to exactly where I needed to start fixing this problem. I followed <a href="http://matplotlib.org/faq/virtualenv_faq.html">the included instructions</a> for creating a PYTHONHOME script to include in your virtualenv’s <code class="highlighter-rouge">bin</code>.</p>
+
+<p><strong>Hit errors saying Python2.7 wasn’t in my <code class="highlighter-rouge">/usr/local/bin</code> folder</strong></p>
+
+<p>I didn’t save these errors (maybe I should add that to lessons learned? Save all errors until the problem is solved? Is that a thing people do?), but they essentially said there was not python2.7 in my <code class="highlighter-rouge">/usr/local/bin</code> folder, which the above-created PYTHONHOME script pointed to.</p>
+
+<p><strong>Accessed both <code class="highlighter-rouge">/usr/local/bin</code> and <code class="highlighter-rouge">/Library/Frameworks/Python.framework</code> - no Python2.7</strong></p>
+
+<p>This is when I freaked out. I saw all the Python 3s I have downloaded over the past months in <code class="highlighter-rouge">/usr/local/bin</code>, and I saw 3.4 and 3.5 in <code class="highlighter-rouge">Python.framework/Versions</code>. But where the heck was my Python2.7??</p>
+
+<p><strong>Got confused and worried</strong></p>
+
+<p>I <em>know</em> Mac needs Python2.7 to run its apps, and that you should never, ever remove the default Mac Python unless you <em>really</em> know what you’re doing. I’d never even considered doing this. My next thought was, <em>Did installing additional versions of Python somehow remove 2.7?</em></p>
+
+<p>This was followed up by wondering why A) all my Mac apps functioned normally, and B) why when I open a REPL it still, with no problems, defaults to Python 2.7.</p>
+
+<p>I figured 2.7 was <em>somewhere</em>, but why wasn’t it showing up in the above mentioned directories? Had I removed links somewhere but not the root program, allowing my computer to still function but I couldn’t link to the python install, as I was trying to do in the PYTHONHOME script?</p>
+
+<p><strong>Incessant Googling</strong></p>
+
+<p>Herein lies the problem with Googling: sometimes you Google the wrong things.</p>
+
+<p>My searches centered around asking why python2.7 was missing from <code class="highlighter-rouge">/usr/local/bin</code> and how to restore it to that location. I found a lot of answers about how removing it was the dumbest thing you could do (I <em>know</em>! I didn’t, I swear!), and also suggestions on reinstalling your most recent OS X to restore system defaults, including system Python defaults.</p>
+
+<p>Embarrassingly, I was going to go through with a <a href="https://support.apple.com/en-us/HT204904">reinstall of my OS</a>. Mac makes this easy to do, and you theoretically don’t lose any of your files or data. Thankfully, I hit a snag that made me put off doing this. Details unimportant there, but I am SO GLAD that snag happened.</p>
+
+<p><em>How close I came to taking an involved action that wouldn’t have fixed my problem has made me much more cautious of the “Blindly copy-paste from StackOverflow!” mentality programmers joke about so much. Again, you don’t know if you’re asking the right question.</em></p>
+
+<p><strong>Finally Googled the right thing</strong></p>
+
+<p>I continued searching for a solution.</p>
+
+<p>The magic Google was: “restore python2.7 to frameworks mac.”</p>
+
+<p>The first result was an answer to the question: <a href="http://stackoverflow.com/questions/26917765/how-to-restore-python-on-os-x-yosemite-after-ive-deleted-something">How to restore python on OS X Yosemite after I’ve deleted something?</a>.</p>
+
+<p>This question was asking similar questions to what I had been wondering, as the questioner specifically referenced <code class="highlighter-rouge">/Library/Frameworks</code> and <code class="highlighter-rouge">/usr/local/bin</code>, which were the two paths I had been most concerned with.</p>
+
+<p>Luckily for both of us, someone answered our unasked question as well, which should have been, “Is there somewhere else I should look for the default Mac installs of Python?”</p>
+
+<p>Thank you, <a href="http://stackoverflow.com/users/908494/abarnert">abarnert</a>. I created a StackOverflow account so I could upvote your answer. (I know, I should have created one a while ago. This experience fixed so many problems!)</p>
+
+<p>The most pivotal piece of their answer was:</p>
+
+<blockquote>
+  <p>Let’s start off with this:</p>
+</blockquote>
+
+<blockquote>
+  <p><code class="highlighter-rouge">/Library/Frameworks/Python/2.7</code> is neither the Apple Python nor the Homebrew Python. You apparently installed a third Python, maybe the one from the official python.org binary installers. Removing that one won’t affect the Homebrew one.</p>
+</blockquote>
+
+<blockquote>
+  <p><code class="highlighter-rouge">/usr/local/bin/python</code> is not the Apple Python either. It may be a symlink to your third Python or to the Homebrew Python, but it’s not from Apple.</p>
+</blockquote>
+
+<blockquote>
+  <p>Here’s where each Python goes:</p>
+</blockquote>
+
+<blockquote>
+  <p>Apple’s Python is in <code class="highlighter-rouge">/System/Library/Frameworks/Python/2.7</code>. It also includes various wrapper executables in <code class="highlighter-rouge">/usr/bin</code>, including <code class="highlighter-rouge">/usr/bin/python</code>, that point at the <code class="highlighter-rouge">/System</code> framework. Any extra stuff you install with that Python (e.g., via <code class="highlighter-rouge">easy_install</code> or <code class="highlighter-rouge">pip</code>) that includes executables or scripts will go into <code class="highlighter-rouge">/usr/local/bin</code>, not <code class="highlighter-rouge">/usr/bin</code>, but Apple’s pre-installed stuff never does.
+Most third-party binary installers install into <code class="highlighter-rouge">/Library/Frameworks/Python/2.7</code>. Different versions can optionally add the framework’s bin directory to your path, or symlink the binaries into <code class="highlighter-rouge">/usr/local/bin</code>.
+Homebrew installs to somewhere like <code class="highlighter-rouge">/usr/local/Cellar/python/2.7.8</code>, then symlinks various executables and scripts into <code class="highlighter-rouge">/usr/local/bin</code>.
+So, the fact that you’re trying to get back to the Apple Python by making sure <code class="highlighter-rouge">/usr/local/bin</code> is on your PATH is already heading in the wrong direction.</p>
+</blockquote>
+
+<p><strong>Queue Hallelujah chorus</strong></p>
+
+<p>I now knew my Mac default Python was safe and sound, <em>and</em> I knew how to fix my matplotlib problem.</p>
+
+<p>I updated my path in my PYTHONHOME executable from <code class="highlighter-rouge">/usr/local/bin</code> to <code class="highlighter-rouge">/usr/bin</code>. Ta-da! I can now run a REPL in my virtualenv with matplotlib working in all its glory.</p>
+
+<p>Well, once I figure out how matplotlib works.</p>
+
+<p>To the docs, Robin! We’ve still got work to do.</p>
+
+        </div>
+        <div class="col-md-8 col-md-offset-2" id="disqus">
+          
+            <div id="disqus_thread"></div>
+<script>
+var disqus_config = function () {
+this.page.url = 'http://localhost:4000/blog/2016/09/05/Learnings-on-Mac-and-the-Default-Python/';
+this.page.identifier = '/blog/2016/09/05/Learnings-on-Mac-and-the-Default-Python';
+};
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = '//rachelkrantz.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+          
+        </div>
+      </div>
+    </div>
+  </article>
+
+</div>
+
+      </div>
+    </div>
+
+		<!-- Footer -->
+<footer>
+  
+  <div class="footer">
+  </div>
+
+</footer>
+
+		<!-- jQuery Version 1.11.0 -->
+  <script src="/js/jquery-1.11.0.js"></script>
+
+<!-- Plugin JavaScript -->
+  <script src="/js/jquery.easing.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+  <script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+  <script src="/js/landing-page.js"></script>
+
+	</body>
+</html>
