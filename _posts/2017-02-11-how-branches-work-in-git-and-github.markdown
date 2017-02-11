@@ -12,10 +12,13 @@ I had personally decided to make heavy use of git branches for this book club. T
 However, when I suggested to the group to make use of branches, we realized we needed to take a step back and explain what branches were and how they work.
 
 Things people did with branches at our book club:
+
 - created a branch for the project we were working on, within the repository that housed the project we were working on
+
 - removed master branch so as to only have branches house specific projects within the repository
 
 Questions people had:
+
 - does the use of branches change greatly when working alone on a project vs working in a team?
 
 I'm going to address all three of these topics in a bit. First, I'm going to attempt a basic explanation on what exactly branches are and why they are useful.
@@ -32,19 +35,19 @@ That's the purpose of branching - to contribute to the growth of your main proje
 
 Now, why do we add new code in branches? Why not add it directly to `master`? This question has many answers.
 
-#1
+**1**
 When you are on a team, you are all contributing code to your `master` trunk. However, you're not all working on the same features at once. Think of the tree again. A tree grows multiple branches at a time, because it needs that many opportunities to collect food. In the same way, a project's repository will have multiple branches at once that house different new features to be added to the project. Let's say Chandra is working on Feature A, Stacy is working on Feature B, and Jasmine is working on Feature C. They can work on all these different features simultaneously by _branching off_ of `master`.
 
 When Stacy finishes work on her `feature-b` branch, she can have her coworkers look at her code, run tests against it to make sure it doesn't break any `master` functionality, and then add her code from her `feature-b` branch into `master`. This is what's called a `merge`, and now the `master` trunk has all the code from `feature-b` inside it.
 
 At this point, Stacy would delete `feature-b` branch. When she starts work on a new feature, she will make a new branch to work on that code.
 
-#2
+**2**
 When you are working alone on a project, branches are still useful. Let's say you have a project that is a live app. That app uses the code in your `master` trunk. Now, you don't want to make changes to your `master` unless you are sure they work, because otherwise your app will break and you'll get lots of angry customer emails. So you write a bunch of new code on your `feature-b` branch. You run your tests against it, and a bunch fail. You broke something! Luckily though, you broke it on a side branch. Since your application only looks at the code in `master` and not any of your side branches, your app is safe and sound.
 
 Once you fix the broken stuff and get your tests to pass, and you're confident your new code won't break your app, you then merge your `feature-b` branch into your `master` trunk and everything is hunky-dory. You can delete `feature-b` and create a new branch to work on your next new feature.
 
-#3
+#3#
 The final use case I'm going to address is the use case I am encouraging people to apply in the book club. This is where you use branches to maintain a different version of your repository _alongside of_ your `master` trunk. Maybe think of this as those weird looking trees that have two trunks. Or really thick branches that are so big they have their own branches.
 
 Here's how it plays out. We have our repository (or "repo" for short) "front-end-web-dev." By the end of the book, this repo is going to have four different directories, or folders, in it that each house a separate project.
