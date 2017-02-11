@@ -67,7 +67,7 @@ ___
 
 OK! Those explanations got longer and longer as I went on. As you may have realized by now, git is very complex and powerful. But the basics are simple once you get them down, I promise!
 
-I've addressed two of the topics I listed at the beginning. As for renaming your `master` branch to something other than "master", don't do that. As a beginner, you don't want to get into that maze. The short answer to why the main branch (or trunk!) is called "master" is because git has quite a commands that default to whatever branch is called `master`, and, I assume, because it's nice to have consistency -- you can jump into any codebase anywhere on GitHub or in a codebase that uses git and know that the `master` branch is the main one.
+I've addressed two of the topics I listed at the beginning. As for renaming your `master` branch to something other than "master", don't do that. As a beginner, you don't want to get into that maze. The short answer to why the main branch (or trunk!) is called "master" is because git has quite a few commands that default to whatever branch is called `master`, and, I assume, because it's nice to have consistency -- you can jump into any codebase anywhere on GitHub or in a codebase that uses git and know that the `master` branch is the main one.
 
 If you _really_ __really__ want to rename your `master` branch, [here's some explanation on how.](http://stackoverflow.com/questions/12759615/how-to-set-develop-branch-as-default-in-github-instead-of-master/12764517#12764517) I don't recommend it at this stage of your learning journey into git, but I'm neither am I going to keep you from experimenting.
 
