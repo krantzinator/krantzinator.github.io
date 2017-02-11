@@ -7,7 +7,7 @@ category: blog
 ---
 At the first meeting of AkronWiT'S current programming book club, we realized that the majority of people had either never used git before or weren't familiar with how to use git/GitHub for version control.
 
-I had personally decided to make heavy use of git branches for this book club. The book we are using, Big Nerd Ranch's Guide to Front End Web Development, has additional challenges at the end of each chapter. The authors warn that you should keep your `challenges` work separate from your main work as the code you write for the challenges may break some of the base functionality of a project. Creating a branch named `challenges` seemed like the obvious choice.
+I had personally decided to make heavy use of git branches for this book club. The book we are using, Big Nerd Ranch's Guide to Front End Web Development, has additional challenges at the end of each chapter. The authors warn that you should keep your challenges work separate from your main work, as the code you write for the challenges may break some of the base functionality of a project. Creating a branch named `challenges` seemed like the obvious choice.
 
 However, when I suggested to the group to make use of branches, we realized we needed to take a step back and explain what branches were and how they work.
 
@@ -25,15 +25,15 @@ I'm going to address all three of these topics in a bit. First, I'm going to att
 
 Let's go with the obvious tree analogy.
 
-When you initialize a git repository or create a new repository in GitHub, you are automatically set up with a branch called `master`. Think of `master` as the trunk of the tree. That is the main thing that you want to grow.
+When you initialize a git repository (or create a new repository in GitHub), you are automatically set up with a branch called `master`. Think of `master` as the trunk of the tree. That is the main thing that you want to grow.
 
-Along the way, the main `master` trunk needs help. In tree terms, it needs branches to help it make and store food so it can use it grow. In code terms, the `master` trunk needs side branches to contribute to _its_ growth. The side branches are where new code (food) is created and, when the `master` trunk is ready to absorb it and grow a little bit taller, then you move your code-food from the side branch into the `master` trunk. You do this through a process called _merging_, and we'll talk about how to merge side branches into your `master` in a bit.
+Along the way, the main `master` trunk needs help. In tree terms, it needs branches to help it make and store food so it can use this food grow. In code terms, the `master` trunk needs side branches to contribute to the growth of its code and the growth of the features the project has. The side branches are where new code (food) is created and, when the `master` trunk is ready to absorb it and grow a little bit taller, then you move your code-food from the side branch into the `master` trunk. You do this by using git's merging powers. (I'll leave you to research how merging works on your own. This post is only covering the concept and general use of branches.)
 
 For a good visualization of how this works, you can see [CodeSchool's Intro to Git](https://www.codeschool.com/courses/try-git). Go ahead and open that up in a new tab to go through when you finish reading this post.
 
-That's the purpose of branching - to contribute to the growth of your main project, or `master` trunk. (Side note: technically `master` is just another branch. However, I quite like this _trunk_ analogy and am going to refer to it as the main trunk for the rest of this post. I'll explain in a bit why it's called `master` and why it's important.)
+That's the purpose of branching - to contribute to the growth of your main project, or `master` trunk. (Side note: technically `master` is just another branch. However, I quite like this _trunk_ analogy and am going to refer to it as the main trunk for the rest of this post.)
 
-Now, why do we add new code in branches? Why not add it directly to `master`? This question has many answers.
+Now, why do we add new code in side branches? Why not add it directly to `master`? This question has several answers.
 
 **1**
 
@@ -75,8 +75,8 @@ I think that covers the broad concepts behind branching and the main use cases f
 
 I want to keep going and explain how GitHub and git are actually not the same thing, but I won't. I need to work on the next chapters for book club now, for one thing. For another, git has many, many rabbit holes I could go down in explaining its nuances. (Kind of like real trees! Ahhh.)
 
-In closing, I'll leave you with this: if you decide to have one branch to house your work on multiple challenges (such as `challenges` or `ottergram-challenges`), you are going to run into the question how to merge your updated project code _from_ `master` _into_ `challenges`.
+In closing, I'll leave you with this: if you decide to have one branch to house your work on multiple challenges (such as `challenges` or `ottergram-challenges`), you are going to run into the question of how to merge your updated project code _from_ `master` _into_ `challenges`.
 
-But wait, that's the opposite of how branches are supposed to be used! I'm supposed to merge code from branches into `master`, not the other way 'round!
+_But wait, that's the opposite of how branches are supposed to be used! I'm supposed to merge code from branches into `master`, not the other way 'round!_
 
 That, my friend, is another topic. We'll probably have to get into it this coming week, so I may write another post for it. To that end - let me know if you have more questions on branching I can answer.
