@@ -75,7 +75,7 @@ I think that covers the broad concepts behind branching and the main use cases f
 
 I want to keep going and explain how GitHub and git are actually not the same thing, but I won't. I need to work on the next chapters for book club now, for one thing. For another, git has many, many rabbit holes I could go down in explaining its nuances. (Kind of like real trees! Ahhh.)
 
-In closing, I'll leave you with this: if you decide to have one main branch to house your work on the challenges (such as `challenges` or `ottergram-challenges`), you are going to run into the question how to merge your updated project code _from_ `master` _into_ `challenges`.
+In closing, I'll leave you with this: if you decide to have one branch to house your work on multiple challenges (such as `challenges` or `ottergram-challenges`), you are going to run into the question how to merge your updated project code _from_ `master` _into_ `challenges`.
 
 But wait, that's the opposite of how branches are supposed to be used! I'm supposed to merge code from branches into `master`, not the other way 'round!
 
