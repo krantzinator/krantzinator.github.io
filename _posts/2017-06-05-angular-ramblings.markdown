@@ -5,17 +5,17 @@ title: Angular ramblings
 date: 2017-06-05
 category: blog
 ---
-I'm learning Angular. I almost said, "I'm playing around with Angular," but that would be discounting the work I'm putting into it.
+I'm learning Angular. I almost said, "I'm playing around with Angular," but that would be discounting the work I'm putting into it. I should add a quick **Disclaimer:** _Some of the below information, I guessed at. They are informed guesses in my opinion, and probably correct? But guesses. I will notate them with asterisks, like so: this is a guess\*._
 
 For my benefit and the benefit of anyone who thinks like me, I'm going to brain-dump the connections I see in this framework.
 
 Angular is made up of `.ts`, `.html`, and `.css` files, mostly. `TS` stands for Typescript, which is a better version of JavaScript, basically. Every **component** has one of each, and the overarching app has one of each.
 
-But let's back up a bit further. Every piece of an Angular app has a **component**. These *components* are what your viewers see. So it's not enough to say that you have one of each of the three file types I just listed. It's more like, each of your components has one of each of those file types.
+But let's back up a bit further. Every piece of an Angular app has a **component**. These **components** are what your viewers see. So it's not enough to say that you have one of each of the three file types I just listed. It's more like, each of your components has one of each of those file types.
 
 If you have an About Me page, you would have `about-me.component.html`, `about-me.component.css`, and `about-me.component.ts`. Same goes for a Contact page, or a Flying Dragons page. Each one would have those three file types.
 
-Of course, the `.ts` and `.css` files feed into the `.html` file, telling it how to function and what to display. Then the main `app.component.html` **component** comes knocking, asking Flying Dragons what it should show. Flying Dragons looks at the `app.component.css`, then overwrites any necessary css with its own `flying-dragons.component.css`, hooks up the code in its `flying-dragons.component.ts`, and shoots over what should be displayed to `app.component.html` to display.
+Of course, the `.ts` and `.css` files feed into the `.html` file, telling it how to function and what to display. Then the main `app.component.html` **component** comes knocking, asking Flying Dragons what it should show. Flying Dragons looks at the `app.component.css`\*, then overwrites any necessary css with its own `flying-dragons.component.css`\*, hooks up the code in its `flying-dragons.component.ts`, and shoots over what should be displayed to `app.component.html` to display.
 
 Along with the overarching `app.component.html` et al, you also have an `app.routes.ts` and an `app.module.ts`. The `routes.ts` file tells the app what web addresses to display things at. For example, you may have a component with lots of subcomponents. What if your `flying-dragons` component has options for whether or not it shows a black dragon or a red dragon. Maybe you have `red-dragon` and `black-dragon` components, and depending on user input on the `flying-dragons` page, `flying-dragons` will pull in the html, css, and ts code tied to either the black or red dragons. But you don't want the app address to change to `black-dragon` or `red-dragon`. You want your user to stay on `flying-dragons`!
 
@@ -34,7 +34,7 @@ export const rootRouterConfig: Routes = [
   }
 ];
 ```
-Notice how the path strings for **BlackDragonComponent** and **RedDragonComponent** are both empty. This tells Angular to go ahead and keep displaying the parent path.
+Notice how the path strings for **BlackDragonComponent** and **RedDragonComponent** are both empty. This tells Angular to go ahead and keep displaying the parent path\*.
 
 I had started this thing intending to build a simple list application. Now I have the urge to do something with dragons...
 
