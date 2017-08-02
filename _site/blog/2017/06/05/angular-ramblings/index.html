@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="writing about it in Akron, OH.
+">
+    <meta name="author" content="Rachel Krantz">
+
+    <title>Angular ramblings</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/css/style.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Nixie+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,500' rel='stylesheet' type='text/css'>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="theme-color" content="#000000">
+
+</head>
+
+
+	<body>
+		<!-- Navigation -->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://www.rachelkrantz.com">Rachel Krantz</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+              
+              
+              
+  
+    
+      <li><a href="/blog/">Blog</a></li>
+    
+  
+
+  
+
+  
+
+  
+    
+      <li><a href="/talks/">Talks</a></li>
+    
+  
+
+
+
+
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+		
+		<!-- padding to make size of content responsive -->
+		<div id="content-spacer-top"></div>
+
+		<div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Angular ramblings</h1>
+    <p class="post-meta">Jun 5, 2017</p>
+  </header>
+
+  <article class="post-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <p>I’m learning Angular. I almost said, “I’m playing around with Angular,” but that would be discounting the work I’m putting into it. I should add a quick <strong>Disclaimer:</strong> <em>Some of the below information, I guessed at. They are informed guesses in my opinion, and probably correct? But guesses. I will notate them with asterisks, like so: this is a guess*.</em></p>
+
+<p>For my benefit and the benefit of anyone who thinks like me, I’m going to brain-dump the connections I see in this framework.</p>
+
+<p>Angular is made up of <code class="highlighter-rouge">.ts</code>, <code class="highlighter-rouge">.html</code>, and <code class="highlighter-rouge">.css</code> files, mostly. <code class="highlighter-rouge">TS</code> stands for Typescript, which is a better version of JavaScript, basically. Every <strong>component</strong> has one of each, and the overarching app has one of each.</p>
+
+<p>But let’s back up a bit further. Every piece of an Angular app has a <strong>component</strong>. These <strong>components</strong> are what your viewers see. So it’s not enough to say that you have one of each of the three file types I just listed. It’s more like, each of your components has one of each of those file types.</p>
+
+<p>If you have an About Me page, you would have <code class="highlighter-rouge">about-me.component.html</code>, <code class="highlighter-rouge">about-me.component.css</code>, and <code class="highlighter-rouge">about-me.component.ts</code>. Same goes for a Contact page, or a Flying Dragons page. Each one would have those three file types.</p>
+
+<p>Of course, the <code class="highlighter-rouge">.ts</code> and <code class="highlighter-rouge">.css</code> files feed into the <code class="highlighter-rouge">.html</code> file, telling it how to function and what to display. Then the main <code class="highlighter-rouge">app.component.html</code> <strong>component</strong> comes knocking, asking Flying Dragons what it should show. Flying Dragons looks at the <code class="highlighter-rouge">app.component.css</code>*, then overwrites any necessary css with its own <code class="highlighter-rouge">flying-dragons.component.css</code>*, hooks up the code in its <code class="highlighter-rouge">flying-dragons.component.ts</code>, and shoots over what should be displayed to <code class="highlighter-rouge">app.component.html</code> to display.</p>
+
+<p>Along with the overarching <code class="highlighter-rouge">app.component.html</code> et al, you also have an <code class="highlighter-rouge">app.routes.ts</code> and an <code class="highlighter-rouge">app.module.ts</code>. The <code class="highlighter-rouge">routes.ts</code> file tells the app what web addresses to display things at. For example, you may have a component with lots of subcomponents. What if your <code class="highlighter-rouge">flying-dragons</code> component has options for whether or not it shows a black dragon or a red dragon. Maybe you have <code class="highlighter-rouge">red-dragon</code> and <code class="highlighter-rouge">black-dragon</code> components, and depending on user input on the <code class="highlighter-rouge">flying-dragons</code> page, <code class="highlighter-rouge">flying-dragons</code> will pull in the html, css, and ts code tied to either the black or red dragons. But you don’t want the app address to change to <code class="highlighter-rouge">black-dragon</code> or <code class="highlighter-rouge">red-dragon</code>. You want your user to stay on <code class="highlighter-rouge">flying-dragons</code>!</p>
+
+<p>Enter the <code class="highlighter-rouge">app.routes.ts</code>. In here, you list out the routes to display for all components, <em>including</em> subcomponents. Angular calls these subcomponents <code class="highlighter-rouge">children</code>. Your <code class="highlighter-rouge">app.routes.ts</code> might look like so:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>export const rootRouterConfig: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'flying-dragons', component: FlyingDragonsComponent,
+    children: [
+      { path: '', component: BlackDragonComponent },
+      { path: '', component: RedDragonComponent }
+    ]
+  }
+];
+</code></pre>
+</div>
+<p>Notice how the path strings for <strong>BlackDragonComponent</strong> and <strong>RedDragonComponent</strong> are both empty. This tells Angular to go ahead and keep displaying the parent path*.</p>
+
+<p>I had started this thing intending to build a simple list application. Now I have the urge to do something with dragons…</p>
+
+<p>When you have created a <strong>component</strong> (or a shared <strong>service</strong>, which is a topic for another time), you will list your component in so many places. <code class="highlighter-rouge">app.routes.ts</code>, <code class="highlighter-rouge">app.module.ts</code>, you’ll probably link to the component from <code class="highlighter-rouge">app.component.html</code>, and if your component has child components or shared services, they’ll all link to each other as well. By “link” I mean, you’d have an <code class="highlighter-rouge">import</code> statement at the top, such as <code class="highlighter-rouge">import { RedDragonComponent } from './dragons/red-dragon/red-dragon-component;</code>. You have to import all the components you want a particular viewable component to display or have access to.</p>
+
+<p>If you’re not familiar with importing, think of it like a toolset. In order to have your House App, you need to build your <code class="highlighter-rouge">LivingRoomComponent</code>, <code class="highlighter-rouge">DiningRoomComponent</code>, and <code class="highlighter-rouge">BathroomComponent</code>. Each of those rooms needs access to tools, so perhaps you’d build a <code class="highlighter-rouge">WallsComponent</code>, <code class="highlighter-rouge">WindowsComponent</code>, and <code class="highlighter-rouge">FlooringComponent</code>. <code class="highlighter-rouge">LivingRoomComponent</code> imports <code class="highlighter-rouge">WindowsComponent</code> so it has the functionality to allow people to see outside, along with <code class="highlighter-rouge">FlooringComponent</code> so you don’t fall through to the basement, and your House App displays the finished product of <code class="highlighter-rouge">LivingRoomComponent</code> with all of its imported components in place. If that’s a stretch, I’m sorry. It’s late and I’m drinking decaf coffee.</p>
+
+<p>You’d also list all your <strong>components</strong> in <code class="highlighter-rouge">app.module.ts</code> as <strong>declarations</strong> under an instantiation of <code class="highlighter-rouge">@NgModule</code>. For example:</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>@NgModule({
+  declarations: [
+    FlyingDragonsComponent,
+    RedDragonComponent,
+    BlackDragonComponent
+    ]
+  })
+</code></pre>
+</div>
+
+<p>You have a lot more stuff in that <code class="highlighter-rouge">@NgModule</code> thing, but that’s the start of if anyway.</p>
+
+<p>I’m figuring all of this out, because I wanted to remove the <code class="highlighter-rouge">github</code> component from the <code class="highlighter-rouge">angular2-seed</code> app I started with, and it had a bit of depth to it. The mental picture and understanding of an Angular app’s construction is coming together in my brain though. I like this.</p>
+
+<p>Next step, building my own form. I think one of Angular’s draws is its form powers and validations and stuff? Not sure. I might have made that up. But it does have a lot of form stuff.</p>
+
+<p>Onward!</p>
+
+        </div>
+        <div class="col-md-8 col-md-offset-2" id="disqus">
+          
+            <div id="disqus_thread"></div>
+<script>
+var disqus_config = function () {
+this.page.url = 'http://www.rachelkrantz.com/blog/2017/06/05/angular-ramblings/';
+this.page.identifier = '/blog/2017/06/05/angular-ramblings';
+};
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = '//rachelkrantz.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+          
+        </div>
+      </div>
+    </div>
+  </article>
+
+</div>
+
+      </div>
+    </div>
+
+		<!-- Footer -->
+<footer>
+  
+  <div class="footer">
+  </div>
+
+</footer>
+
+		<!-- jQuery Version 1.11.0 -->
+  <script src="/js/jquery-1.11.0.js"></script>
+
+<!-- Plugin JavaScript -->
+  <script src="/js/jquery.easing.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+  <script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+  <script src="/js/landing-page.js"></script>
+
+	</body>
+</html>

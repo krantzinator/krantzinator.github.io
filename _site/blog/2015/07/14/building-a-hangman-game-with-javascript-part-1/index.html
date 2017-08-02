@@ -78,10 +78,6 @@
   
 
   
-    
-      <li><a href="/portfolio/">Portfolio</a></li>
-    
-  
 
   
     
@@ -116,7 +112,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
-    <p>Have you heard of CodeNewbie? I’ll rave about them pretty regularly on here. One fateful night, after joining their Slack community, I impulsively jumped on the Hangout for that night’s JavaScript Tuesday.</p>
+          <p>Have you heard of CodeNewbie? I’ll rave about them pretty regularly on here. One fateful night, after joining their Slack community, I impulsively jumped on the Hangout for that night’s JavaScript Tuesday.</p>
 
 <p>Lesson 1: follow your impulses!</p>
 
@@ -143,7 +139,8 @@
   </li>
 </ul>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html">for (var i = 0; i <span class="nt">&lt; 10</span><span class="err">;</span> <span class="na">i</span><span class="err">++)</span> <span class="err">{</span>  <span class="na">myFunction</span><span class="err">();</span>  <span class="err">}</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-html" data-lang="html">        for (var i = 0; i <span class="nt">&lt; 10</span><span class="err">;</span> <span class="na">i</span><span class="err">++)</span> <span class="err">{</span>  <span class="na">myFunction</span><span class="err">();</span>  <span class="err">}</span>
+        </code></pre></figure>
 
 <ul>
   <li>I just called a function!</li>
@@ -152,13 +149,14 @@
   <li>jQuery can be interwoven into JavaScript! Say whaaaaat. It’s a library, so it’s a natural part of JavaScript, not a separate thing! I’m still not 100% clear on the differences and similarities of libraries as compared to frameworks, but FWIW. This function works:</li>
 </ul>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html">easyPuzzle = document.getElementById(&quot;easy-puzzle&quot;).addEventListener(&quot;click&quot;, function() {
+<figure class="highlight"><pre><code class="language-html" data-lang="html">  easyPuzzle = document.getElementById("easy-puzzle").addEventListener("click", function() {
    wordSelect(easyArray);
-   for (i = 0; i <span class="nt">&lt; lettersToGuess.length</span><span class="err">;</span> <span class="na">i</span><span class="err">++)</span> <span class="err">{</span>
-   <span class="err">$(&#39;.</span><span class="na">letter-space</span><span class="err">&#39;).</span><span class="na">empty</span><span class="err">();</span>
-   <span class="err">$(&#39;.</span><span class="na">letter-space</span><span class="err">&#39;).</span><span class="na">append</span><span class="err">(</span><span class="na">lettersToGuess</span><span class="err">[</span><span class="na">i</span><span class="err">]);</span>
+   for (i = 0; i <span class="nt">&lt; lettersToGuess</span><span class="err">.</span><span class="na">length</span><span class="err">;</span> <span class="na">i</span><span class="err">++)</span> <span class="err">{</span>
+   <span class="err">$('.</span><span class="na">letter-space</span><span class="err">').</span><span class="na">empty</span><span class="err">();</span>
+   <span class="err">$('.</span><span class="na">letter-space</span><span class="err">').</span><span class="na">append</span><span class="err">(</span><span class="na">lettersToGuess</span><span class="err">[</span><span class="na">i</span><span class="err">]);</span>
    <span class="err">};</span>
-  <span class="err">});</span></code></pre></div>
+  <span class="err">});</span>
+  </code></pre></figure>
 
 <p>There is so much more to learn! I keep seeing these things called Grunt and Gulp (and Redis now) floating around, and I have a vague understanding of their existence, but that’s about it. And that’s OK for now.
 There are also tools that will do the “build” of an app for you. We used Yeoman, which builds out the backend of the aforementioned Grunt and Gulp and importing different libraries and all sorts of fancy things. I don’t fully understand its importance yet, but I know I’ll learn more once we finish the application and talk about the hosting side of things.</p>
