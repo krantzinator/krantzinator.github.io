@@ -112,111 +112,111 @@
         <div class="col-md-8 col-md-offset-2">
           <p>Troubleshooting is often intimidating for people new to code. It’s easy to feel lost and have no idea where to start. To that end, I wanted to share a recent troubleshooting attempt of mine at work.</p>
 
-<p>I am upgrading our gems in our test environment to Ruby 2.3.3, and as part of that, I’ve been working on a particular gem that relies heavily on ActiveRecord. I worked through all the deprecation errors to get our syntax up to current ActiveRecord levels, and then ran <code class="highlighter-rouge">bundle exec rake spec</code> to as the final step before building the gem.</p>
+<p>I am upgrading our gems in our test environment to Ruby 2.3.3, and as part of that, I’ve been working on a particular gem that relies heavily on ActiveRecord. I worked through all the deprecation errors to get our syntax up to current ActiveRecord levels, and then ran <code class="highlighter-rouge">bundle exec rake spec</code> as the final step before building the gem.</p>
 
 <p>Except they all failed. Wooooo.</p>
 
-<p><strong>Why did they fail?</strong>
-I scroll up my list of failures and see a bunch of <code class="highlighter-rouge">FactoryGirl::DuplicateDefinitionError: Factory already registered</code>. Well, this is a big problem, most if not all of my tests are failing from this. I should figure it out. I do a few searches on this but can’t find anything helpful.</p>
+<p><strong>Why did they fail?</strong>&lt;/br&gt;
+I scroll up my list of failures and see a bunch of <code class="highlighter-rouge">FactoryGirl::DuplicateDefinitionError: Factory already registered</code>. Most if not all of my tests are failing from this. I do a few searches on this but can’t find anything helpful.</p>
 
-<p><strong>Is this the only failure?</strong>
+<p><strong>Is this the only failure?</strong>&lt;/br&gt;
 I scroll all the way to the top and see that one test does not fail due to <code class="highlighter-rouge">FactoryGirl::DuplicateDefinitionError</code>. The very first test fails due to <code class="highlighter-rouge">ActiveRecord::Base.establish_connection(CONNECTION_NAME) ActiveRecord::AdapterNotSpecified: database configuration does not specify adapter</code>.</p>
 
 <p>Ah. This would cause problems on downstream tests, if I can’t even establish the starting connection to the test database. This is could be fueling the FactoryGirl errors. I don’t know anything about FactoryGirl, and the <code class="highlighter-rouge">DuplicateDefinitionError</code> sounds like it’s separate from failing to establish a connection at all to the database, but what they hey. Fixing FactoryGirl definitely won’t fix ActiveRecord, and there’s an off-chance fixing ActiveRecord will give me a boost with figuring out FactoryGirl.</p>
 
-<p><strong>What does the internet say?</strong>
+<p><strong>What does the internet say?</strong>&lt;/br&gt;
 I grab the failure line, and find a lot of things along the lines of <a href="https://stackoverflow.com/questions/23336755/activerecordadapternotspecified-database-configuration-does-not-specify-adapte#23338963">this StackOverflow article</a>.
 It doesn’t seem to be much help, becase my <code class="highlighter-rouge">config.yml</code> file looks good, and I have sqlite3 installed. So what do I do now?</p>
 
-<p><strong>What’s the top line in the stack trace?</strong>
+<p><strong>What’s the top line in the stack trace?</strong>&lt;/br&gt;
 That points to my <code class="highlighter-rouge">lib/company_name/gem_name.rb</code> file. I go there.</p>
 
-<p><strong>Is the way we’re calling <code class="highlighter-rouge">establish_connection</code> different now?</strong>
+<p><strong>Is the way we’re calling <code class="highlighter-rouge">establish_connection</code> different now?</strong>&lt;/br&gt;
 In this file, I see our setup of <code class="highlighter-rouge">def establish_connection</code> which includes <code class="highlighter-rouge">ActiveRecord::Base.establish_connection(CONNECTION_NAME)</code>. OK, cool. This is the exact line from my error message. I’ve found the culprit.</p>
 
-<p><strong>What is wrong with this line?</strong>
+<p><strong>What is wrong with this line?</strong>&lt;/br&gt;
 I assume this is an issue with our syntax again, due to deprecation, and I spend a lot of time searching ActiveRecord docs to try to understand A) what’s happening in general since I don’t fully understand this thing, and B) see if there have been breaking syntax changes in creating connections since the version we used to use and the most current version.</p>
 
 <p>I find nothing.</p>
 
-<p><strong>What else could it be?</strong>
+<p><strong>What else could it be?</strong>&lt;/br&gt;
 The syntax all looks fine from what I’ve learned about ActiveRecord. We’re feeding in options to establish a connection based on the given database. Something must be breaking further up the chain. Back to the stack trace.</p>
 
-<p><strong>Where does the configuration specify an adapter?</strong>
+<p><strong>Where does the configuration specify an adapter?</strong>&lt;/br&gt;
 Since this question is based off of the literal error message, it’s where I probably should have started anyway. Well, that’s embarrassing.
 Looking at my stack trace, I see that the arguments being passed into the <code class="highlighter-rouge">ActiveRecord::Base.establish_connection(CONNECTION_NAME)</code> come from a <code class="highlighter-rouge">integration_spec.rb</code> file. However, the error is in the <code class="highlighter-rouge">require</code> statement on line 1, not with any way that file is calling this function specifically. Huh.</p>
 
-<p><strong>What is being required that’s failing?</strong>
+<p><strong>What is being required that’s failing?</strong>&lt;/br&gt;
 This file is requiring <code class="highlighter-rouge">spec_helper.rb</code>. That file is also listed in my stack trace. I’m getting closer.
 In <code class="highlighter-rouge">spec_helper.rb</code>, I look for the line where it’s calling <code class="highlighter-rouge">establish_connection</code> - line 29 - as well as the line listed in the stack trace - line 30.</p>
 
 <p><strong>What argument am I giving this call of <code class="highlighter-rouge">establish_connection</code>?</strong>
 That would be a <code class="highlighter-rouge">dbconfig</code> variable that I declare a couple of lines up.</p>
 
-<p><strong>OK, so what is that <code class="highlighter-rouge">dbconfig</code> variable resolving to?</strong>
+<p><strong>OK, so what is that <code class="highlighter-rouge">dbconfig</code> variable resolving to?</strong>&lt;/br&gt;
 <code class="highlighter-rouge">dbconfig</code> makes use of <code class="highlighter-rouge">StandaloneMigrations::Configurator.load_configurations[:test]</code>.</p>
 
-<p><strong>Is the syntax right?</strong>
+<p><strong>Is the syntax right?</strong>&lt;/br&gt;
 I am not familiar with this <code class="highlighter-rouge">standalone_migrations</code> gem. A couple minutes of searching assures me the syntax is not deprecated.</p>
 
-<p><strong>I do have the <code class="highlighter-rouge">standalone_migrations</code> gem installed that I’m requiring, right?</strong>
+<p><strong>I do have the <code class="highlighter-rouge">standalone_migrations</code> gem installed that I’m requiring, right?</strong>&lt;/br&gt;
 <code class="highlighter-rouge">gem list</code> shows this gem, with the most current version.</p>
 
-<p><strong>What is <code class="highlighter-rouge">StandaloneMigrations::Configurator.load_configurations[:test]</code> returning?</strong>
-I throw in a <code class="highlighter-rouge">puts "dbconfig = #{dbconfig}"</code> and re-run <code class="highlighter-rouge">bundle exec rake spec</code>. I get <code class="highlighter-rouge">dbconfig = </code> in my test output. (As in, my <code class="highlighter-rouge">dbonfig</code> variable is empty, nil, nada, no-way.)
-I open up an IRB, <code class="highlighter-rouge">require standalone_migrations</code>, and run <code class="highlighter-rouge">StandaloneMigrations::Configurator.load_configurations[:test]</code>. Predictably, I receive <code class="highlighter-rouge">nil</code> as the result.
+<p><strong>What is <code class="highlighter-rouge">StandaloneMigrations::Configurator.load_configurations[:test]</code> returning?</strong>&lt;/br&gt;
+I throw in a <code class="highlighter-rouge">puts "dbconfig = #{dbconfig}"</code> and re-run <code class="highlighter-rouge">bundle exec rake spec</code>. I get <code class="highlighter-rouge">dbconfig = </code> in my test output. (As in, my <code class="highlighter-rouge">dbonfig</code> variable is empty, nil, nada, no-way.)&lt;/br&gt;
+I open up an IRB, <code class="highlighter-rouge">require 'standalone_migrations'</code>, and run <code class="highlighter-rouge">StandaloneMigrations::Configurator.load_configurations[:test]</code>. Predictably, I receive <code class="highlighter-rouge">nil</code> as the result.&lt;/br&gt;
 I double check my <code class="highlighter-rouge">config.yml</code> file, which houses the settings for my <code class="highlighter-rouge">test</code> environment. Everything checks out. Huh.</p>
 
-<p><strong>What’s an obvious thing I can try?</strong>
+<p><strong>What’s an obvious thing I can try?</strong>&lt;/br&gt;
 You know, I’ve been reading a lot lately about how you should use <code class="highlighter-rouge">["test"]</code> syntax instead of <code class="highlighter-rouge">[:test]</code> because the <code class="highlighter-rouge">:</code> syntax is kinda unique to Ruby and would confuse a new person.</p>
 
-<p><strong>What would happen if I change <code class="highlighter-rouge">[:test]</code> to <code class="highlighter-rouge">["test"]</code> in my IRB call?</strong>
-<code class="highlighter-rouge"><span class="p">{</span><span class="nt">"adapter"</span><span class="err">=&gt;</span><span class="nt">"sqlite3"</span><span class="err">,</span><span class="w"> </span><span class="nt">"database"</span><span class="err">=&gt;</span><span class="nt">"path/to/db/test.sqlite3"</span><span class="err">,</span><span class="w"> </span><span class="nt">"pool"</span><span class="err">=&gt;5,</span><span class="w"> </span><span class="nt">"timeout"</span><span class="err">=&gt;5000}</span></code>
-WOOHOOO Y’ALL.
-Time to update my <code class="highlighter-rouge">spec_helper.rb</code>.
+<p><strong>What would happen if I change <code class="highlighter-rouge">[:test]</code> to <code class="highlighter-rouge">["test"]</code> in my IRB call?</strong>&lt;/br&gt;
+I try it, and get back <code class="highlighter-rouge"><span class="p">{</span><span class="nt">"adapter"</span><span class="err">=&gt;</span><span class="nt">"sqlite3"</span><span class="err">,</span><span class="w"> </span><span class="nt">"database"</span><span class="err">=&gt;</span><span class="nt">"path/to/db/test.sqlite3"</span><span class="err">,</span><span class="w"> </span><span class="nt">"pool"</span><span class="err">=&gt;5,</span><span class="w"> </span><span class="nt">"timeout"</span><span class="err">=&gt;5000}</span></code>&lt;/br&gt;
+WOOHOOO Y’ALL.&lt;/br&gt;
+Time to update my <code class="highlighter-rouge">spec_helper.rb</code>.&lt;/br&gt;
 My elation is short-lived, as I still get the same failure.
-However, my <code class="highlighter-rouge">puts</code> statement is now returning <code class="highlighter-rouge">dbconfig = {"adapter"=&gt;"sqlite3", "database"=&gt;"path/to/db/test.sqlite3", "pool"=&gt;5, "timeout"=&gt;5000}</code>, so that’s something.
-Huh.
-The stack trace is the same. So the error was before that <code class="highlighter-rouge">dbconfig</code> line…which makes sense since the <code class="highlighter-rouge">dbconfig</code> stuff was on lines 26-29, and my stack trace clearly points to line 30 as the culprit. However, my efforts were not in vain because line 30 uses the variable <code class="highlighter-rouge">connection</code> which is set on line 29 like so: <code class="highlighter-rouge">connection = Vht::ConfigAdapter.establish_connection(dbconfig)</code>.
-So I believe I am just a step ahead in my troubleshooting. Now to take a step back for the problm in front of my face.</p>
+However, my <code class="highlighter-rouge">puts</code> statement is now returning <code class="highlighter-rouge">dbconfig = {"adapter"=&gt;"sqlite3", "database"=&gt;"path/to/db/test.sqlite3", "pool"=&gt;5, "timeout"=&gt;5000}</code>, so that’s something.&lt;/br&gt;
+Huh.&lt;/br&gt;
+The stack trace is the same. So the error was before that <code class="highlighter-rouge">dbconfig</code> line…which makes sense since the <code class="highlighter-rouge">dbconfig</code> stuff was on lines 26-29, and my stack trace clearly points to line 30 as the culprit. However, my efforts were not in vain because line 30 uses the variable <code class="highlighter-rouge">connection</code> which is set on line 29 like so: <code class="highlighter-rouge">connection = Vht::ConfigAdapter.establish_connection(dbconfig)</code>.&lt;/br&gt;
+So I believe I am just a step ahead in my troubleshooting. Now to take a step back for the problem in front of my face.</p>
 
-<p><strong>What does line 30 say?</strong>
+<p><strong>What does line 30 say?</strong>&lt;/br&gt;
 <code class="highlighter-rouge">database_cleaner = DatabaseCleaner[:active_record, {:connection =&gt; connection}]</code></p>
 
-<p><strong>Is this another problem of <code class="highlighter-rouge">:</code> syntax versus <code class="highlighter-rouge">""</code>?</strong>
-To the IRB, Robin!
-<code class="highlighter-rouge">require 'database_cleaner'</code>
-<code class="highlighter-rouge">DatabaseCleaner[:active_record, {:connection =&gt; connection}]</code>
-<code class="highlighter-rouge">NameError: undefined local variable or method 'connection' for main:Object</code>
+<p><strong>Is this another problem of <code class="highlighter-rouge">:</code> syntax versus <code class="highlighter-rouge">""</code>?</strong>&lt;/br&gt;
+To the IRB, Robin!&lt;/br&gt;
+<code class="highlighter-rouge">require 'database_cleaner'</code>&lt;/br&gt;
+<code class="highlighter-rouge">DatabaseCleaner[:active_record, {:connection =&gt; connection}]</code>&lt;/br&gt;
+<code class="highlighter-rouge">NameError: undefined local variable or method 'connection' for main:Object</code>&lt;/br&gt;
 Oh, duhhh.
-I run the code defining <code class="highlighter-rouge">dbconfig</code> so I can feed it into the <code class="highlighter-rouge">connection</code> variable definition.
-<code class="highlighter-rouge">connection = CompanyName::GemName.establish_connection(dbconfig)</code>
-<code class="highlighter-rouge">NameError: uninitialized constant CompanyName</code>
-DUH again. A glance up at all the <code class="highlighter-rouge">require</code>s in this <code class="highlighter-rouge">spec_helper.rb</code> and -
-<code class="highlighter-rouge">require 'company_gem_name'</code>
-<code class="highlighter-rouge">connection = CompanyName::GemName.establish_connection(dbconfig)</code>
-<code class="highlighter-rouge">ActiveRecord::AdapterNotSpecified: database configuration does not specify adapter</code>
+I try again, running the code defining <code class="highlighter-rouge">dbconfig</code> so I can feed it into the <code class="highlighter-rouge">connection</code> variable definition.&lt;/br&gt;
+<code class="highlighter-rouge">connection = CompanyName::GemName.establish_connection(dbconfig)</code>&lt;/br&gt;
+<code class="highlighter-rouge">NameError: uninitialized constant CompanyName</code>&lt;/br&gt;
+DUH again. A glance up at all the <code class="highlighter-rouge">require</code>s in this <code class="highlighter-rouge">spec_helper.rb</code> and -&lt;/br&gt;
+<code class="highlighter-rouge">require 'company_gem_name'</code>&lt;/br&gt;
+<code class="highlighter-rouge">connection = CompanyName::GemName.establish_connection(dbconfig)</code>&lt;/br&gt;
+<code class="highlighter-rouge">ActiveRecord::AdapterNotSpecified: database configuration does not specify adapter</code>&lt;/br&gt;
 But it does. I is confused.</p>
 
-<p><strong>Why isn’t my <code class="highlighter-rouge">sqlite3</code> adapter coming through?</strong>
-I double-check my <code class="highlighter-rouge">adapter</code> setting to make sure. Yep, it’s right there, in the output of setting my <code class="highlighter-rouge">dbconfig</code> variable: <code class="highlighter-rouge">"adapter" =&gt; "sqlite3"</code>.
+<p><strong>Why isn’t my <code class="highlighter-rouge">sqlite3</code> adapter coming through?</strong>&lt;/br&gt;
+I double-check my <code class="highlighter-rouge">adapter</code> setting to make sure. Yep, it’s right there, in the output of setting my <code class="highlighter-rouge">dbconfig</code> variable: <code class="highlighter-rouge">"adapter" =&gt; "sqlite3"</code>.&lt;/br&gt;
 Options as I see them:</p>
 <ul>
   <li>sqlite3 isn’t installed</li>
   <li>something weird with syntax <code class="highlighter-rouge">:</code> vs <code class="highlighter-rouge">""</code> making it unable to read the adapter setting that is clearly there</li>
 </ul>
 
-<p><strong>What’s the status of sqlite3?</strong>
-<code class="highlighter-rouge">gem list sqlite3</code> shows <code class="highlighter-rouge">sqlite3 1.3.13 x64-mingw32</code>.
-Ugh. I hope this isn’t a DevKit problem. Blahhhhh. I recently learned that on Windows (which I am on), DevKits for different Ruby versions behave differently, and the <code class="highlighter-rouge">x64-mingw32</code> tells me this gem was compiled by DevKit, so maybe I have some funny business going on there.
+<p><strong>What’s the status of sqlite3?</strong>&lt;/br&gt;
+<code class="highlighter-rouge">gem list sqlite3</code> shows <code class="highlighter-rouge">sqlite3 1.3.13 x64-mingw32</code>.&lt;/br&gt;
+Ugh. I hope this isn’t a DevKit problem. Blahhhhh. I recently learned that on Windows (which I am on), DevKits for different Ruby versions behave differently, and the <code class="highlighter-rouge">x64-mingw32</code> tells me this gem was compiled by DevKit, so maybe I have some funny business going on there.&lt;/br&gt;
 Some searching turns up that if it couldn’t find sqlite3 at all, I would get an error like <code class="highlighter-rouge">sqlite3 is not part of the bundle</code></p>
 
 <p>And guess where I am. Back to searching for that error phrase. I don’t feel like this time was wasted though, because I’ve learned more about how ActiveRecord works, and I have a more full picture in my mind of how these pieces are working together. I <em>am</em> however, at a bit of a loss.</p>
 
-<p><strong>Ask for help</strong>
+<p><strong>Ask for help</strong>&lt;/br&gt;
 It’s time.</p>
 
-<p><strong>How I ask for help</strong>
+<p><strong>How I ask for help</strong>&lt;/br&gt;
 I don’t go through <em>all</em> of that above work. I explain where my mind is:</p>
 <ul>
   <li>I’m getting this error message <code class="highlighter-rouge">ActiveRecord::AdapterNotSpecified: database configuration does not specify adapter</code></li>
@@ -228,17 +228,19 @@ I don’t go through <em>all</em> of that above work. I explain where my mind is
 
 <hr />
 
-<p>OK, I’m back. I have learned things!
-The way this is set up, it is theoretically pointing to a <code class="highlighter-rouge">test</code> version of a <code class="highlighter-rouge">sqlite3</code> database. That’s what it’s missing.
-Theoretically.
-HOWEVER.
+<p>OK, I’m back. I have learned things!&lt;/br&gt;
+The way this is set up, it is theoretically pointing to a <code class="highlighter-rouge">test</code> version of a <code class="highlighter-rouge">sqlite3</code> database. That’s what it’s missing.&lt;/br&gt;
+Theoretically.&lt;/br&gt;
+HOWEVER.&lt;/br&gt;
 Under my <code class="highlighter-rouge">db</code> folder, in the same folder as my <code class="highlighter-rouge">config.yml</code> no less, I see, plain as day, the <code class="highlighter-rouge">test.sqlite3</code> database. In fact, I earlier created this as part of my <code class="highlighter-rouge">db:migrate</code> and <code class="highlighter-rouge">db:seed</code> commands. And this matches the path that is spit out when I initialize that <code class="highlighter-rouge">dbconfig</code> variable. So that is what I am sending to <code class="highlighter-rouge">establish_connection</code>.</p>
 
-<p><strong>So. Why is ActiveRecord not seeing this database?</strong>
-For the hell of it, since all my configurations have the same setup, and to get ideas out of my head, I’m going to run those IRB commands with “development” instead of “test”. Be back in a sec.
-————-
-OK same problem. I just had to make sure because I actually created my <code class="highlighter-rouge">test.sqlite3</code> by copy/pasting my <code class="highlighter-rouge">development.sqlite3</code> and I don’t know, maybe the copy/paste didn’t work right. Whatever.
-Back to Square 1. Well, I’m at least at Square 2 now. Insofar as I have eliminated options.
+<p><strong>So. Why is ActiveRecord not seeing this database?</strong>&lt;/br&gt;
+For the hell of it, since all my configurations have the same setup, and to get ideas out of my head, I’m going to run those IRB commands with “development” instead of “test”. Be back in a sec.</p>
+
+<hr />
+
+<p>OK same problem. I just had to make sure because I actually created my <code class="highlighter-rouge">test.sqlite3</code> by copy/pasting my <code class="highlighter-rouge">development.sqlite3</code> and I don’t know, maybe the copy/paste didn’t work right. Whatever.&lt;/br&gt;
+Back to Square 1. Well, I’m at least at Square 2 now. Insofar as I have eliminated options.&lt;/br&gt;
 BLAH.</p>
 
 <p>I’m going to take a break here. I have some other things I need to do, and then I’m going out for lunch with some co-workers. I’ll be back.</p>
@@ -246,7 +248,8 @@ BLAH.</p>
 <hr />
 <hr />
 <hr />
-<p>The error messaging in IRB has an ActiveRecord-specific stack trace. The top of that stack points me to line 170 of ActiveRecord’s <code class="highlighter-rouge">connection_adapters/connection_specification.rb</code>. Going there, I see this error message is raised <code class="highlighter-rouge">unless spec.key?(:adapter)</code>, with <code class="highlighter-rouge">spec</code> being set as <code class="highlighter-rouge">spec = resolve(config).symbolize_keys</code>. <code class="highlighter-rouge">config</code> is an argument fed into the function which is also, and totally not confusingly, called <code class="highlighter-rouge">spec</code>.
+
+<p>The error messaging in IRB has an ActiveRecord-specific stack trace. The top of that stack points me to line 170 of ActiveRecord’s <code class="highlighter-rouge">connection_adapters/connection_specification.rb</code>. Going there, I see this error message is raised <code class="highlighter-rouge">unless spec.key?(:adapter)</code>, with <code class="highlighter-rouge">spec</code> being set as <code class="highlighter-rouge">spec = resolve(config).symbolize_keys</code>. <code class="highlighter-rouge">config</code> is an argument fed into the function which is also, and totally not confusingly, called <code class="highlighter-rouge">spec</code>.&lt;/br&gt;
 Here is the portion of ActiveRecord’s <code class="highlighter-rouge">establish_connection</code> that I am hitting. My error is happening on the last line of this, as <code class="highlighter-rouge">resolver.spec</code> takes us to the aforementioned stuff where <code class="highlighter-rouge">.symbolize_keys</code> happens and then stuff fails.
 ```
 def establish_connection(spec = nil)
@@ -258,17 +261,17 @@ def establish_connection(spec = nil)
   spec     =   resolver.spec(spec, self == Base ? “primary” : name)
   ```</p>
 
-<p>But back to that <code class="highlighter-rouge">unless spec.key?(:adapter)</code> line. I do, quite clearly, have a key of <code class="highlighter-rouge">"adapter"</code>, when I set my <code class="highlighter-rouge">dbconfig</code> variable to my test configuration. Let me try manually symbolizing the keys of that output and see if I get back something wonky.
+<p>But back to that <code class="highlighter-rouge">unless spec.key?(:adapter)</code> line. I do, quite clearly, have a key of <code class="highlighter-rouge">"adapter"</code>, when I set my <code class="highlighter-rouge">dbconfig</code> variable to my test configuration. Let me try manually symbolizing the keys of that output and see if I get back something wonky.&lt;/br&gt;
 Nope, sure don’t. I get back <code class="highlighter-rouge"><span class="p">{</span><span class="err">:adapter=&gt;</span><span class="nt">"sqlite3"</span><span class="err">,</span><span class="w"> </span><span class="p">:</span><span class="err">database=&gt;</span><span class="s2">"path/to/db/development.sqlite3"</span><span class="p">,</span><span class="w"> </span><span class="p">:</span><span class="err">pool=&gt;</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="p">:</span><span class="err">timeout=&gt;</span><span class="mi">5000</span><span class="p">}</span></code>.
-And when I run in IRB <code class="highlighter-rouge">spec = dbconfig.symbolize_keys</code> and <code class="highlighter-rouge">spec.key?(:adapter)</code> it all checks out.
-So WHY IS THIS HAPPENING.
+And when I run in IRB <code class="highlighter-rouge">spec = dbconfig.symbolize_keys</code> and <code class="highlighter-rouge">spec.key?(:adapter)</code> it all checks out.&lt;/br&gt;
+So WHY IS THIS HAPPENING.&lt;/br&gt;
 Well. ActiveRecord doesn’t do a strict <code class="highlighter-rouge">spec = dbconfig.symbolize_keys</code>. It is actually running <code class="highlighter-rouge">spec = resolve(dbconfig).symbolize_keys</code>. Time to dig into this <code class="highlighter-rouge">resolve</code> business.</p>
 
 <hr />
 
 <p>OK back from lunch.</p>
 
-<p><strong>What resource haven’t I used yet?</strong>
+<p><strong>What resource haven’t I used yet?</strong>&lt;/br&gt;
 The <em>Issues</em> on GitHub!
 I found <a href="https://github.com/rails/rails/issues/11609">this issue</a> which linked to <a href="https://gist.github.com/drogus/6087979">this gist</a> which had a comment by this wonderful <a href="https://gist.github.com/jehughes">jehughes</a> which said:</p>
 <blockquote>
@@ -281,7 +284,7 @@ Otherwise I was getting a missing adapter error.”</p>
   </blockquote>
 </blockquote>
 
-<p>Ahhhhhh.
+<p>Ahhhhhh.&lt;/br&gt;
 After a minor flub with forgetting that parentheses aren’t required in Ruby and that the <code class="highlighter-rouge">DatabaseTasks.env.to_sym</code> was an argument and not a separate method, I implemented this lovely fix, which involved changing <code class="highlighter-rouge">ActiveRecord::Base.establish_connection(CONNECTION_NAME)</code> to <code class="highlighter-rouge">ActiveRecord::Base.establish_connection(CONNECTION_NAME.to_sym)</code>.</p>
 
 <p>Tested in IRB. Got back a whole object rather than an error message about missing a database adapter.</p>
@@ -293,6 +296,8 @@ After a minor flub with forgetting that parentheses aren’t required in Ruby an
 <p><em>knock on wood</em></p>
 
 <p>Oh I forgot to mention – the deprecation errors I worked through at the start of this? Yeah those were just from getting the database to seed correctly. Now the <em>real</em> deprecation upgrade work begins.</p>
+
+<p><em>As a final note, my troubleshooting is still a work-in-progress. I keep reminding myself to <strong>check the Issues first!</strong> These are at least as helpful as StackOverflow, and rarely show up as well in blanket internet searches, whether using Google or DuckDuckGo or otherwise. CHECK THE ISSUES, SELF. CHECK THE ISSUES.</em></p>
 
         </div>
         <div class="col-md-8 col-md-offset-2" id="disqus">
