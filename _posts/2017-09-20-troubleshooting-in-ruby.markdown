@@ -176,3 +176,5 @@ Changed my code. Ran `bundle exec rake spec`.
 And look at that! Now I have a whole _slew_ of failing tests! A quick glance through the ~100 failing tests shows lots of syntax deprecation. Here's hoping my full update of this gem is Ruby 2.3.3 is in sight.
 
 *knock on wood*
+
+Oh I forgot to mention -- the deprecation errors I worked through at the start of this? Yeah those were just from getting the database to seed correctly. Now the _real_ deprecation upgrade work begins.
