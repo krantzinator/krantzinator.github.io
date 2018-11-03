@@ -12,11 +12,11 @@ Below you will find the transcript of a story I shared with an old co-worker at 
 
 well the short of it is, [redacted] was mad that there were a ton of regression tests backed up, so he forced jenkins to restart in order to cancel all the jobs, not knowing that you need to cancel all the jobs before stopping/restarting jenkins.
 
-then when it came back online, a bunch of plugins and probably other things were stuck in a not good, Very Bad:tm: state
+then when it came back online, a bunch of plugins and probably other things were stuck in a not good, Very Bad state
 
 and we didn't notice until someone came by my desk to ask how we use boolean tags in jenkins
 
-and i went to show them, but :scream: the Conditional Steps option was gone. and it was gone from _every_ job
+and i went to show them, but 😱 the Conditional Steps option was gone. and it was gone from _every_ job
 
 after a bit of sleuthing and tying this problem to [redacted]'s restart of jenkins -- verified by seeing that NONE of the jobs starting at ~9:30am onward made use of any conditional steps -- i had to reset jenkins to the last pushed up branch
 
@@ -36,4 +36,4 @@ so i created a `timestamp` file with the date of today and time of 16:30
 i then ran this handy little script in the `/var/lib/jenkins/jobs` directory as the jenkins user to delete _only stuff from a specific build number's folder_ (important so you don't lose config data)
 `find . -regextype sed -regex ".*/builds/[0-9]\+" -newer /tmp/timestamp -exec rm -r {} \;`
 
-and that was my whole afternoon :tada:
+and that was my whole afternoon 🎉
